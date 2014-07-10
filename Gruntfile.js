@@ -18,6 +18,7 @@ module.exports = function (grunt) {
   // Configurable paths
   var config = {
     app: 'app',
+    tmp: '.tmp',
     dist: 'dist'
   };
 
@@ -61,7 +62,7 @@ module.exports = function (grunt) {
         },
         files: [
           '<%= config.app %>/{,*/}*.html',
-          '.tmp/styles/{,*/}*.css',
+          '<%= config.app %>/styles/{,*/}*.css',
           '<%= config.app %>/images/{,*/}*'
         ]
       }
@@ -82,13 +83,9 @@ module.exports = function (grunt) {
             return [
               connect.static('.tmp'),
               connect().use('/bower_components', connect.static('./bower_components')),
-              connect.static(config.app)
+              connect.static(config.tmp)
             ];
-          },
-          base: [
-            'test',
-            '.tmp'
-          ]
+          }
         }
       },
       test: {
@@ -96,20 +93,14 @@ module.exports = function (grunt) {
           open: false,
           port: 9001,
           keepalive: false,
-          middleware: function (connect) {
-            return [
-              connect.static('.tmp'),
-              connect.static('test'),
-              connect().use('/bower_components', connect.static('./bower_components')),
-              connect.static(config.app)
-            ];
-          }
+          base: ['<%= config.tmp %>']
         }
       },
       dist: {
         options: {
           base: '<%= config.dist %>',
           livereload: false
+
         }
       }
     },
@@ -143,16 +134,6 @@ module.exports = function (grunt) {
         '!<%= config.app %>/scripts/vendor/*',
         'test/spec/{,*/}*.js'
       ]
-    },
-
-    // Mocha testing framework configuration options
-    mocha: {
-      all: {
-        options: {
-          run: true,
-          urls: ['http://<%= connect.test.options.hostname %>:<%= connect.test.options.port %>/index.html']
-        }
-      }
     },
 
     // Compiles Sass to CSS and generates necessary files if requested
@@ -350,6 +331,12 @@ module.exports = function (grunt) {
           }
         ]
       },
+      serve : {
+        files : [
+          {src : 'bower_components/angular/angular.js', dest: '<%= config.tmp %>/scripts/angular.js'},
+          {src : '<%= config.app %>/index.html', dest: '<%= config.tmp %>/index.html'}
+        ]
+      },
       styles: {
         expand: true,
         dot: true,
@@ -380,10 +367,13 @@ module.exports = function (grunt) {
     concurrent: {
       server: [
         'sass:server',
-        'copy:styles'
+        'copy:styles',
+        'copy:serve'
       ],
       test: [
-        'copy:styles'
+        'sass:server',
+        'copy:styles',
+        'copy:serve'
       ],
       dist: [
         'sass',
@@ -441,12 +431,13 @@ module.exports = function (grunt) {
     }
 
     grunt.task.run([
-      'connect:test'
+      'connect:test',
+      'protractor:firefox'
     ]);
   });
 
   grunt.registerTask('e2e', 'Run functional tests.', function () {
-    var defaultTasks = ['connect:test', 'protractor:firefox'];
+    var defaultTasks = ['clean:server', 'concurrent:test','connect:test', 'protractor:firefox'];
 
     grunt.task.run(defaultTasks);
   });

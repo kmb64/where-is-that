@@ -6,7 +6,7 @@ describe('Where is it app', function(){
     browser.get('/index.html');
   });
   it('should have the correct page title', function() {
-    sleep(300);
-    expect(page.getPageTitle()).toEqual('where is that');
+    console.log(page.getPageTitle);
+    expect(page.getPageTitle()).toBe('where is that');
   });
 });
