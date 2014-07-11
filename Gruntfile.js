@@ -331,10 +331,12 @@ module.exports = function (grunt) {
           }
         ]
       },
-      serve : {
-        files : [
-          {src : 'bower_components/angular/angular.js', dest: '<%= config.tmp %>/scripts/angular.js'},
-          {src : '<%= config.app %>/index.html', dest: '<%= config.tmp %>/index.html'}
+      serve: {
+        files: [
+          {src: 'bower_components/angular/angular.js', dest: '<%= config.tmp %>/scripts/angular.js'},
+          {src: 'bower_components/jquery/dist/jquery.min.js', dest: '<%= config.tmp %>/scripts/jquery.min.js'},
+
+          {src: '<%= config.app %>/index.html', dest: '<%= config.tmp %>/index.html'}
         ]
       },
       styles: {
@@ -343,6 +345,14 @@ module.exports = function (grunt) {
         cwd: '<%= config.app %>/styles',
         dest: '.tmp/styles/',
         src: '{,*/}*.css'
+      }
+    },
+    concat: {
+      js: {
+        src: [
+          '<%= config.app %>/scripts/**/*.js'
+        ],
+        dest: '<%= config.tmp %>/scripts/app.js'
       }
     },
 
@@ -368,12 +378,14 @@ module.exports = function (grunt) {
       server: [
         'sass:server',
         'copy:styles',
-        'copy:serve'
+        'copy:serve',
+        'concat'
       ],
       test: [
         'sass:server',
         'copy:styles',
-        'copy:serve'
+        'copy:serve',
+        'concat'
       ],
       dist: [
         'sass',
@@ -437,7 +449,7 @@ module.exports = function (grunt) {
   });
 
   grunt.registerTask('e2e', 'Run functional tests.', function () {
-    var defaultTasks = ['clean:server', 'concurrent:test','connect:test', 'protractor:firefox'];
+    var defaultTasks = ['clean:server', 'concurrent:test', 'connect:test', 'protractor:firefox'];
 
     grunt.task.run(defaultTasks);
   });
@@ -445,7 +457,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'useminPrepare',
     'concurrent:dist',
     'autoprefixer',
     'concat',
@@ -454,7 +465,6 @@ module.exports = function (grunt) {
     'copy:dist',
     'modernizr',
     'rev',
-    'usemin',
     'htmlmin'
   ]);
 
