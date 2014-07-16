@@ -34,7 +34,8 @@
         <li><a href="#about">About</a></li>
         <li><a href="#contact">Contact</a></li>
       </ul>
-    </div><!--/.nav-collapse -->
+    </div>
+    <!--/.nav-collapse -->
   </div>
 </div>
 
@@ -42,18 +43,51 @@
 
   <div ng-controller="photo">
 
-    <div id="bg">
+    <div class="photo-container">
+      <div class="current-photo">
 
-      <img class="current-photo" src="http://static.panoramio.com/photos/large/52303881.jpg"/>
+        <img src="http://static.panoramio.com/photos/large/52303881.jpg"/>
 
+      </div>
+
+      <div class="attribution">
+        <div class="row">
+
+          <div class="col-xs-6 col-sm-3">
+            <a class="logo" href="http://www.panoramio.com/">
+              <img alt="Panoramio logo" src="images/panoramio.png"/>
+            </a>
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <a href="http://www.panoramio.com/photo/123">
+              http://www.panoramio.com/photo/532693
+            </a>
+          </div>
+
+
+          <div class="col-xs-6 col-sm-3">
+            <a href="http://www.panoramio.com/user/123">
+              Author Name
+            </a>
+          </div>
+          <div class="col-xs-6 col-sm-3">
+            <p class="panoramio-copyright">
+              Photos provided by Panoramio are under the copyright of their owners
+            </p>
+          </div>
+
+        </div>
+
+
+      </div>
     </div>
-
 
 
   </div>
 
 
-</div><!-- /.container -->
+</div>
+<!-- /.container -->
 
 <script src="scripts/jquery.min.js"></script>
 <script src="scripts/angular.js"></script>

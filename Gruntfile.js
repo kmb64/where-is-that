@@ -341,7 +341,9 @@ module.exports = function (grunt) {
           {src: 'bower_components/angular/angular.js', dest: '<%= config.tmp %>/scripts/angular.js'},
           {src: 'bower_components/jquery/dist/jquery.min.js', dest: '<%= config.tmp %>/scripts/jquery.min.js'},
 
-          {src: '<%= config.app %>/index.html', dest: '<%= config.tmp %>/index.html'}
+          {src: '<%= config.app %>/index.html', dest: '<%= config.tmp %>/index.html'},
+
+          {expand: true, dot: true, cwd: '<%= config.app %>/images', src: '{,*/}*.png', dest: '<%= config.tmp %>/images'}
         ]
       },
       styles: {

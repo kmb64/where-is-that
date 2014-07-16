@@ -5,6 +5,7 @@ angular.module('wheresThat', [
 
 ]).constant('config', {
 
-  panoramioApiEndpoint: 'http://www.panoramio.com/map/get_panoramas.php'
+  panoramioApiEndpoint: 'http://www.panoramio.com/map/get_panoramas.php',
+  panoramioApiTimeout : 5000
 
 });
