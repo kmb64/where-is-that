@@ -34,7 +34,7 @@ $icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/
   }
 
   [class*="col-"] {
-    padding : 16px;
+    padding : 8px;
     overflow-wrap: break-word;
   }
 
@@ -44,11 +44,13 @@ $icon-font-path: "/bower_components/bootstrap-sass-official/vendor/assets/fonts/
     bottom: 0px;
     display: block;
     width: 100%;
-    background : #282829;
+//    background : #282829;
+    background : rgba(40, 40, 41, 0.9);
     padding: 0 16px;
 
     p {
       color: #fff;
+      margin: 0;
     }
 
     a {
